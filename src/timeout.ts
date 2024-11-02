@@ -1,4 +1,4 @@
-export function setTimeoutPromise(timeout: number, signal: AbortSignal) {
+export function setTimeoutPromise(timeout: number, signal?: AbortSignal) {
 	return new Promise((resolve, reject) => {
 		const timeoutID = setTimeout(resolve, timeout);
 
