@@ -1,6 +1,6 @@
-export function setTimeoutPromise(delay, signal) {
+export function setTimeoutPromise(timeout: number, signal: AbortSignal) {
 	return new Promise((resolve, reject) => {
-		const timeoutID = setTimeout(resolve, delay);
+		const timeoutID = setTimeout(resolve, timeout);
 
 		if (signal) {
 			if (signal.aborted) {
@@ -14,9 +14,4 @@ export function setTimeoutPromise(delay, signal) {
 			}
 		}
 	});
-}
-
-// You should probably only use that for node apps
-export function setImmediatePromise() {
-	return new Promise(resolve => setImmediate(resolve));
 }
