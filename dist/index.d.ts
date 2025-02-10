@@ -22,6 +22,7 @@ export declare class Color {
     get blue(): number;
     set alpha(alpha: number);
     get alpha(): number;
+    getLuminance(): number;
 }
 
 export declare function setTimeoutPromise(timeout: number, signal?: AbortSignal): Promise<unknown>;

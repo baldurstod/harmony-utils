@@ -152,4 +152,8 @@ export class Color {
 	get alpha() {
 		return this.#rgba[3];
 	}
+
+	getLuminance(): number {
+		return 0.2126 * this.#rgba[0] + 0.7152 * this.#rgba[1] + 0.0722 * this.#rgba[2];
+	}
 }

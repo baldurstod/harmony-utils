@@ -147,6 +147,9 @@ class Color {
     get alpha() {
         return this.#rgba[3];
     }
+    getLuminance() {
+        return 0.2126 * this.#rgba[0] + 0.7152 * this.#rgba[1] + 0.0722 * this.#rgba[2];
+    }
 }
 
 export { Color, setTimeoutPromise };
