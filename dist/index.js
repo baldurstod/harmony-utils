@@ -18,7 +18,7 @@ class Map2 {
     get(key1, key2) {
         return this.#map.get(key1)?.get(key2);
     }
-    has(key1, key2, value) {
+    has(key1, key2) {
         return this.#map.get(key1)?.has(key2) ?? false;
     }
     set(key1, key2, value) {

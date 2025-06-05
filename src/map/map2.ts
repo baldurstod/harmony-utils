@@ -27,7 +27,7 @@ export class Map2<K1, K2, V> {
 		return this.#map.get(key1)?.get(key2);
 	}
 
-	has(key1: K1, key2: K2, value: V): boolean {
+	has(key1: K1, key2: K2): boolean {
 		return this.#map.get(key1)?.has(key2) ?? false;
 	}
 
