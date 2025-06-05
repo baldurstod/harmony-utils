@@ -1,3 +1,42 @@
+/**
+ * Map2 holds a key-key-value triplet using an underlying Map
+ * Any value can be used as either keys or value
+ */
+class Map2 {
+    #map = new Map();
+    clear() {
+        this.#map.clear();
+    }
+    delete(key1, key2) {
+        return this.#map.get(key1)?.delete(key2) ?? false;
+    }
+    forEach(callbackfn, thisArg) {
+        this.#map.forEach((value, key1) => {
+            value.forEach((value, key2) => callbackfn.call(thisArg, value, key1, key2, this));
+        });
+    }
+    get(key1, key2) {
+        return this.#map.get(key1)?.get(key2);
+    }
+    has(key1, key2, value) {
+        return this.#map.get(key1)?.has(key2) ?? false;
+    }
+    set(key1, key2, value) {
+        if (!this.#map.has(key1)) {
+            this.#map.set(key1, new Map());
+        }
+        this.#map.get(key1).set(key2, value);
+        return this;
+    }
+    get size() {
+        let size = 0;
+        for (const [_, m] of this.#map) {
+            size += m.size;
+        }
+        return size;
+    }
+}
+
 function setTimeoutPromise(timeout, signal) {
     return new Promise((resolve, reject) => {
         const timeoutID = setTimeout(resolve, timeout);
@@ -152,4 +191,4 @@ class Color {
     }
 }
 
-export { Color, setTimeoutPromise };
+export { Color, Map2, setTimeoutPromise };

@@ -25,6 +25,21 @@ export declare class Color {
     getLuminance(): number;
 }
 
+/**
+ * Map2 holds a key-key-value triplet using an underlying Map
+ * Any value can be used as either keys or value
+ */
+export declare class Map2<K1, K2, V> {
+    #private;
+    clear(): void;
+    delete(key1: K1, key2: K2): boolean;
+    forEach(callbackfn: (value: V, key1: K1, key2: K2, map: Map2<K1, K2, V>) => void, thisArg?: any): void;
+    get(key1: K1, key2: K2): V | undefined;
+    has(key1: K1, key2: K2, value: V): boolean;
+    set(key1: K1, key2: K2, value: V): this;
+    get size(): number;
+}
+
 export declare function setTimeoutPromise(timeout: number, signal?: AbortSignal): Promise<unknown>;
 
 export { }
