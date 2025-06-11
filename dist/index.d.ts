@@ -25,8 +25,6 @@ export declare class Color {
     getLuminance(): number;
 }
 
-export declare function loadScripts(scripts: Array<string>): Promise<void>;
-
 /**
  * Map2 holds a key-key-value triplet using an underlying Map
  * Any value can be used as either keys or value
