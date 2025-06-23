@@ -38,6 +38,11 @@ export declare class Map2<K1, K2, V> {
     has(key1: K1, key2: K2): boolean;
     set(key1: K1, key2: K2, value: V): this;
     get size(): number;
+    [Symbol.iterator]: () => Map2Iterator<[K1, K2, V]>;
+}
+
+declare interface Map2Iterator<T> extends IteratorObject<T, BuiltinIteratorReturn, unknown> {
+    [Symbol.iterator](): Map2Iterator<T>;
 }
 
 export declare function setTimeoutPromise(timeout: number, signal?: AbortSignal): Promise<unknown>;

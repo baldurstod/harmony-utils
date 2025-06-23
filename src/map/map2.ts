@@ -49,4 +49,41 @@ export class Map2<K1, K2, V> {
 
 		return size;
 	}
+
+	[Symbol.iterator] = (): Map2Iterator<[K1, K2, V]> => {
+		const iterator1 = this.#map.entries();
+		let iterator2: MapIterator<[K2, V]> | null = null;
+
+		let current1: IteratorResult<[K1, Map<K2, V>], undefined>;
+
+		const next = (): IteratorResult<[K1, K2, V], undefined> => {
+			if (iterator2 == null) {
+				current1 = iterator1.next();
+				if (current1.done) {
+					return { done: true } as IteratorResult<[K1, K2, V], undefined>;
+				}
+
+				iterator2 = current1.value[1].entries();
+			}
+
+			let current2 = iterator2.next();
+			if (current2.done) {
+				iterator2 = null;
+				return next();
+			}
+
+			return { value: [current1.value![0], current2.value![0], current2.value![1]], done: false };
+		}
+
+		return {
+			next: next,
+			[Symbol.iterator]() {
+				return this;
+			},
+		};
+	}
+}
+
+interface Map2Iterator<T> extends IteratorObject<T, BuiltinIteratorReturn, unknown> {
+	[Symbol.iterator](): Map2Iterator<T>;
 }
