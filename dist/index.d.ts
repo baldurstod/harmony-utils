@@ -45,6 +45,8 @@ declare interface Map2Iterator<T> extends IteratorObject<T, BuiltinIteratorRetur
     [Symbol.iterator](): Map2Iterator<T>;
 }
 
+export declare function once(this: any, fn: Function, context?: Function): () => any;
+
 export declare function setTimeoutPromise(timeout: number, signal?: AbortSignal): Promise<unknown>;
 
 export { }

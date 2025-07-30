@@ -1,86 +1,3 @@
-/**
- * Map2 holds a key-key-value triplet using an underlying Map
- * Any value can be used as either keys or value
- */
-class Map2 {
-    #map = new Map();
-    clear() {
-        this.#map.clear();
-    }
-    delete(key1, key2) {
-        return this.#map.get(key1)?.delete(key2) ?? false;
-    }
-    forEach(callbackfn, thisArg) {
-        this.#map.forEach((value, key1) => {
-            value.forEach((value, key2) => callbackfn.call(thisArg, value, key1, key2, this));
-        });
-    }
-    get(key1, key2) {
-        return this.#map.get(key1)?.get(key2);
-    }
-    has(key1, key2) {
-        return this.#map.get(key1)?.has(key2) ?? false;
-    }
-    set(key1, key2, value) {
-        if (!this.#map.has(key1)) {
-            this.#map.set(key1, new Map());
-        }
-        this.#map.get(key1).set(key2, value);
-        return this;
-    }
-    get size() {
-        let size = 0;
-        for (const [_, m] of this.#map) {
-            size += m.size;
-        }
-        return size;
-    }
-    [Symbol.iterator] = () => {
-        const iterator1 = this.#map.entries();
-        let iterator2 = null;
-        let current1;
-        const next = () => {
-            if (iterator2 == null) {
-                current1 = iterator1.next();
-                if (current1.done) {
-                    return { done: true };
-                }
-                iterator2 = current1.value[1].entries();
-            }
-            let current2 = iterator2.next();
-            if (current2.done) {
-                iterator2 = null;
-                return next();
-            }
-            return { value: [current1.value[0], current2.value[0], current2.value[1]], done: false };
-        };
-        return {
-            next: next,
-            [Symbol.iterator]() {
-                return this;
-            },
-        };
-    };
-}
-
-function setTimeoutPromise(timeout, signal) {
-    return new Promise((resolve, reject) => {
-        const timeoutID = setTimeout(resolve, timeout);
-        if (signal) {
-            if (signal.aborted) {
-                clearTimeout(timeoutID);
-                reject('aborted');
-            }
-            else {
-                signal.addEventListener('abort', () => {
-                    clearTimeout(timeoutID);
-                    reject('aborted');
-                });
-            }
-        }
-    });
-}
-
 function rgbToHsl(r, g, b) {
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
     let h = 0, s, l = (max + min) / 2;
@@ -217,4 +134,97 @@ class Color {
     }
 }
 
-export { Color, Map2, setTimeoutPromise };
+/**
+ * Map2 holds a key-key-value triplet using an underlying Map
+ * Any value can be used as either keys or value
+ */
+class Map2 {
+    #map = new Map();
+    clear() {
+        this.#map.clear();
+    }
+    delete(key1, key2) {
+        return this.#map.get(key1)?.delete(key2) ?? false;
+    }
+    forEach(callbackfn, thisArg) {
+        this.#map.forEach((value, key1) => {
+            value.forEach((value, key2) => callbackfn.call(thisArg, value, key1, key2, this));
+        });
+    }
+    get(key1, key2) {
+        return this.#map.get(key1)?.get(key2);
+    }
+    has(key1, key2) {
+        return this.#map.get(key1)?.has(key2) ?? false;
+    }
+    set(key1, key2, value) {
+        if (!this.#map.has(key1)) {
+            this.#map.set(key1, new Map());
+        }
+        this.#map.get(key1).set(key2, value);
+        return this;
+    }
+    get size() {
+        let size = 0;
+        for (const [_, m] of this.#map) {
+            size += m.size;
+        }
+        return size;
+    }
+    [Symbol.iterator] = () => {
+        const iterator1 = this.#map.entries();
+        let iterator2 = null;
+        let current1;
+        const next = () => {
+            if (iterator2 == null) {
+                current1 = iterator1.next();
+                if (current1.done) {
+                    return { done: true };
+                }
+                iterator2 = current1.value[1].entries();
+            }
+            let current2 = iterator2.next();
+            if (current2.done) {
+                iterator2 = null;
+                return next();
+            }
+            return { value: [current1.value[0], current2.value[0], current2.value[1]], done: false };
+        };
+        return {
+            next: next,
+            [Symbol.iterator]() {
+                return this;
+            },
+        };
+    };
+}
+
+function setTimeoutPromise(timeout, signal) {
+    return new Promise((resolve, reject) => {
+        const timeoutID = setTimeout(resolve, timeout);
+        if (signal) {
+            if (signal.aborted) {
+                clearTimeout(timeoutID);
+                reject('aborted');
+            }
+            else {
+                signal.addEventListener('abort', () => {
+                    clearTimeout(timeoutID);
+                    reject('aborted');
+                });
+            }
+        }
+    });
+}
+
+function once(fn, context) {
+    let result;
+    return () => {
+        if (fn) {
+            result = fn.apply(context ?? this, arguments);
+        }
+        return result;
+    };
+}
+
+export { Color, Map2, once, setTimeoutPromise };
