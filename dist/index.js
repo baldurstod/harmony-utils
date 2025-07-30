@@ -219,9 +219,11 @@ function setTimeoutPromise(timeout, signal) {
 
 function once(fn, context) {
     let result;
+    let fn2 = fn;
     return () => {
-        if (fn) {
-            result = fn.apply(context ?? this, arguments);
+        if (fn2) {
+            result = fn2.apply(context ?? this, arguments);
+            fn2 = null;
         }
         return result;
     };

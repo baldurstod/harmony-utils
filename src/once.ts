@@ -3,8 +3,8 @@ export function once(this: any, fn: Function, context?: Function): () => any {
 	let fn2: Function | null = fn;
 
 	return () => {
-		if (fn) {
-			result = fn.apply(context ?? this, arguments);
+		if (fn2) {
+			result = fn2.apply(context ?? this, arguments);
 			fn2 = null;
 		}
 
