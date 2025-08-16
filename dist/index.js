@@ -199,6 +199,53 @@ class Map2 {
     };
 }
 
+class Item {
+    data;
+    next = null;
+    constructor(data) {
+        this.data = data;
+    }
+}
+class Queue {
+    #first = null;
+    #last = null;
+    constructor(values) {
+        for (const value of values) {
+            this.enqueue(value);
+        }
+    }
+    enqueue(value) {
+        const item = new Item(value);
+        if (!this.#first) {
+            this.#first = item;
+        }
+        if (this.#last) {
+            this.#last.next = item;
+        }
+        this.#last = item;
+    }
+    dequeue() {
+        let item = this.#first;
+        if (item) {
+            this.#first = item.next;
+            return item.data;
+        }
+        return null;
+    }
+}
+
+function once(fn, context) {
+    let result;
+    let fn2 = fn;
+    return () => {
+        if (fn2) {
+            result = fn2.apply(context ?? this, arguments);
+            fn2 = null;
+        }
+        return result;
+    };
+}
+
 function setTimeoutPromise(timeout, signal) {
     return new Promise((resolve, reject) => {
         const timeoutID = setTimeout(resolve, timeout);
@@ -217,16 +264,4 @@ function setTimeoutPromise(timeout, signal) {
     });
 }
 
-function once(fn, context) {
-    let result;
-    let fn2 = fn;
-    return () => {
-        if (fn2) {
-            result = fn2.apply(context ?? this, arguments);
-            fn2 = null;
-        }
-        return result;
-    };
-}
-
-export { Color, Map2, once, setTimeoutPromise };
+export { Color, Map2, Queue, once, setTimeoutPromise };
