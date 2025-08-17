@@ -33,6 +33,9 @@ export class Queue<T> {
 		let item = this.#first;
 		if (item) {
 			this.#first = item.next;
+			if (item == this.#last) {
+				this.#last = null;
+			}
 			return item.data;
 		}
 		return null;
