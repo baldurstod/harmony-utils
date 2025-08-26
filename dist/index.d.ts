@@ -77,7 +77,6 @@ export declare class StaticEventTarget {
     static addEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: AddEventListenerOptions | boolean): void;
     static dispatchEvent(event: Event): boolean;
     static removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: EventListenerOptions | boolean): void;
-    static getEventTarget(): EventTarget;
 }
 
 export { }

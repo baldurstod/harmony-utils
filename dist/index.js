@@ -272,9 +272,6 @@ class StaticEventTarget {
     static removeEventListener(type, callback, options) {
         this.eventTarget.removeEventListener(type, callback, options);
     }
-    static getEventTarget() {
-        return this.eventTarget;
-    }
 }
 
 function once(fn, context) {
