@@ -73,7 +73,7 @@ export declare function setTimeoutPromise(timeout: number, signal?: AbortSignal)
  * Static version of MyEventTarget
  */
 export declare class StaticEventTarget {
-    #private;
+    static readonly eventTarget: EventTarget;
     static addEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: AddEventListenerOptions | boolean): void;
     static dispatchEvent(event: Event): boolean;
     static removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: EventListenerOptions | boolean): void;
