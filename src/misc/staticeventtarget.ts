@@ -15,4 +15,8 @@ export class StaticEventTarget {
     static removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: EventListenerOptions | boolean): void {
 		this.#eventTarget.removeEventListener(type, callback, options);
 	}
+
+	static getEventTarget(): EventTarget {
+		return this.#eventTarget;
+	}
 }

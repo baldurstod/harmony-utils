@@ -253,6 +253,9 @@ class MyEventTarget {
     removeEventListener(type, callback, options) {
         this.#eventTarget.removeEventListener(type, callback, options);
     }
+    getEventTarget() {
+        return this.#eventTarget;
+    }
 }
 
 /**
@@ -268,6 +271,9 @@ class StaticEventTarget {
     }
     static removeEventListener(type, callback, options) {
         this.#eventTarget.removeEventListener(type, callback, options);
+    }
+    static getEventTarget() {
+        return this.#eventTarget;
     }
 }
 
