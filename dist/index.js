@@ -237,6 +237,24 @@ class Queue {
     }
 }
 
+/**
+ * The purpose of this class is to circumvent the bug below
+ * Extend MyEventTarget instead of EventTarget
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1473306
+ */
+class MyEventTarget {
+    #eventTarget = new EventTarget();
+    addEventListener(type, callback, options) {
+        this.#eventTarget.addEventListener(type, callback, options);
+    }
+    dispatchEvent(event) {
+        return this.#eventTarget.dispatchEvent(event);
+    }
+    removeEventListener(type, callback, options) {
+        this.#eventTarget.removeEventListener(type, callback, options);
+    }
+}
+
 function once(fn, context) {
     let result;
     let fn2 = fn;
@@ -267,4 +285,4 @@ function setTimeoutPromise(timeout, signal) {
     });
 }
 
-export { Color, Map2, Queue, once, setTimeoutPromise };
+export { Color, Map2, MyEventTarget, Queue, once, setTimeoutPromise };
