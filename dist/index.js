@@ -255,6 +255,22 @@ class MyEventTarget {
     }
 }
 
+/**
+ * Static version of MyEventTarget
+ */
+class StaticEventTarget {
+    static #eventTarget = new EventTarget();
+    static addEventListener(type, callback, options) {
+        this.#eventTarget.addEventListener(type, callback, options);
+    }
+    static dispatchEvent(event) {
+        return this.#eventTarget.dispatchEvent(event);
+    }
+    static removeEventListener(type, callback, options) {
+        this.#eventTarget.removeEventListener(type, callback, options);
+    }
+}
+
 function once(fn, context) {
     let result;
     let fn2 = fn;
@@ -285,4 +301,4 @@ function setTimeoutPromise(timeout, signal) {
     });
 }
 
-export { Color, Map2, MyEventTarget, Queue, once, setTimeoutPromise };
+export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, once, setTimeoutPromise };
