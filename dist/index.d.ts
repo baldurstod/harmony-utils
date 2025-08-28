@@ -25,6 +25,15 @@ export declare class Color {
     getLuminance(): number;
 }
 
+export declare interface JSONArray extends Array<JSONValue> {
+}
+
+export declare interface JSONObject {
+    [k: string]: JSONValue;
+}
+
+export declare type JSONValue = string | number | boolean | null | undefined | JSONValue[] | JSONObject;
+
 /**
  * Map2 holds a key-key-value triplet using an underlying Map
  * Any value can be used as either keys or value

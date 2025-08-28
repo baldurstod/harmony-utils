@@ -199,6 +199,27 @@ class Map2 {
     };
 }
 
+/**
+ * The purpose of this class is to circumvent the bug below
+ * Extend MyEventTarget instead of EventTarget
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1473306
+ */
+class MyEventTarget {
+    #eventTarget = new EventTarget();
+    addEventListener(type, callback, options) {
+        this.#eventTarget.addEventListener(type, callback, options);
+    }
+    dispatchEvent(event) {
+        return this.#eventTarget.dispatchEvent(event);
+    }
+    removeEventListener(type, callback, options) {
+        this.#eventTarget.removeEventListener(type, callback, options);
+    }
+    getEventTarget() {
+        return this.#eventTarget;
+    }
+}
+
 class Item {
     data;
     next = null;
@@ -234,27 +255,6 @@ class Queue {
             return item.data;
         }
         return null;
-    }
-}
-
-/**
- * The purpose of this class is to circumvent the bug below
- * Extend MyEventTarget instead of EventTarget
- * https://bugzilla.mozilla.org/show_bug.cgi?id=1473306
- */
-class MyEventTarget {
-    #eventTarget = new EventTarget();
-    addEventListener(type, callback, options) {
-        this.#eventTarget.addEventListener(type, callback, options);
-    }
-    dispatchEvent(event) {
-        return this.#eventTarget.dispatchEvent(event);
-    }
-    removeEventListener(type, callback, options) {
-        this.#eventTarget.removeEventListener(type, callback, options);
-    }
-    getEventTarget() {
-        return this.#eventTarget;
     }
 }
 
