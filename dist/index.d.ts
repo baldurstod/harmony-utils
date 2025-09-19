@@ -54,16 +54,26 @@ declare interface Map2Iterator<T> extends IteratorObject<T, BuiltinIteratorRetur
     [Symbol.iterator](): Map2Iterator<T>;
 }
 
+declare interface MyEventListener<E extends Event = Event> {
+    (evt: E): void;
+}
+
+declare interface MyEventListenerObject<E extends Event = Event> {
+    handleEvent(object: E): void;
+}
+
+declare type MyEventListenerOrEventListenerObject<E extends Event = Event> = MyEventListener<E> | MyEventListenerObject<E>;
+
 /**
  * The purpose of this class is to circumvent the bug below
  * Extend MyEventTarget instead of EventTarget
  * https://bugzilla.mozilla.org/show_bug.cgi?id=1473306
  */
-export declare class MyEventTarget {
+export declare class MyEventTarget<T extends string = string, E extends Event = Event> {
     #private;
-    addEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: AddEventListenerOptions | boolean): void;
+    addEventListener(type: T, callback: MyEventListenerOrEventListenerObject<E> | null, options?: AddEventListenerOptions | boolean): void;
     dispatchEvent(event: Event): boolean;
-    removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: EventListenerOptions | boolean): void;
+    removeEventListener(type: T, callback: MyEventListenerOrEventListenerObject<E> | null, options?: EventListenerOptions | boolean): void;
     getEventTarget(): EventTarget;
 }
 
