@@ -72,7 +72,7 @@ declare type MyEventListenerOrEventListenerObject<E extends Event = Event> = MyE
 export declare class MyEventTarget<T extends string = string, E extends Event = Event> {
     #private;
     addEventListener(type: T, callback: MyEventListenerOrEventListenerObject<E> | null, options?: AddEventListenerOptions | boolean): void;
-    dispatchEvent(event: Event): boolean;
+    dispatchEvent(event: E): boolean;
     removeEventListener(type: T, callback: MyEventListenerOrEventListenerObject<E> | null, options?: EventListenerOptions | boolean): void;
     getEventTarget(): EventTarget;
 }

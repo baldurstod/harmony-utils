@@ -10,7 +10,7 @@ export class MyEventTarget<T extends string = string, E extends Event = Event> {
 		this.#eventTarget.addEventListener(type, callback as EventListenerOrEventListenerObject, options);
 	}
 
-	dispatchEvent(event: Event): boolean {
+	dispatchEvent(event: E): boolean {
 		return this.#eventTarget.dispatchEvent(event);
 	}
 
