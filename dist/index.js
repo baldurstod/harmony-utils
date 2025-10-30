@@ -154,6 +154,9 @@ class Map2 {
     get(key1, key2) {
         return this.#map.get(key1)?.get(key2);
     }
+    getSubMap(key1) {
+        return this.#map.get(key1);
+    }
     has(key1, key2) {
         return this.#map.get(key1)?.has(key2) ?? false;
     }
