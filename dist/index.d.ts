@@ -12,7 +12,7 @@ export declare class Color {
     setHex(hex: string): void;
     getHex(): string;
     getHue(): number;
-    getHsl(): number[];
+    getHsl(): [number, number, number];
     getRgba(): number[];
     set red(red: number);
     get red(): number;

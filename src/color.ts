@@ -1,4 +1,4 @@
-function rgbToHsl(r: number, g: number, b: number) {
+function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
 	const max = Math.max(r, g, b), min = Math.min(r, g, b);
 	let h = 0, s, l = (max + min) / 2;
 
@@ -113,7 +113,7 @@ export class Color {
 		return rgbToHsl(this.#rgba[0], this.#rgba[1], this.#rgba[2])[0];
 	}
 
-	getHsl() {
+	getHsl(): [number, number, number] {
 		return rgbToHsl(this.#rgba[0], this.#rgba[1], this.#rgba[2]);
 	}
 
