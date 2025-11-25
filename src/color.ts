@@ -1,11 +1,12 @@
 function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
 	const max = Math.max(r, g, b), min = Math.min(r, g, b);
-	let h = 0, s, l = (max + min) / 2;
+	let h = 0, s;
+	const l = (max + min) / 2;
 
 	if (max == min) {
 		h = s = 0; // achromatic
 	} else {
-		var d = max - min;
+		const d = max - min;
 		s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
 
 		switch (max) {
@@ -20,13 +21,13 @@ function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
 	return [h, s, l];
 }
 
-function hslToRgb(h: number, s: number, l: number) {
-	var r, g, b;
+function hslToRgb(h: number, s: number, l: number): number[] {
+	let r, g, b;
 
 	if (s == 0) {
 		r = g = b = l; // achromatic
 	} else {
-		function hue2rgb(p: number, q: number, t: number) {
+		function hue2rgb(p: number, q: number, t: number): number {
 			if (t < 0) t += 1;
 			if (t > 1) t -= 1;
 			if (t < 1 / 6) return p + (q - p) * 6 * t;
@@ -35,8 +36,8 @@ function hslToRgb(h: number, s: number, l: number) {
 			return p;
 		}
 
-		var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-		var p = 2 * l - q;
+		const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+		const p = 2 * l - q;
 
 		r = hue2rgb(p, q, h + 1 / 3);
 		g = hue2rgb(p, q, h);
@@ -47,19 +48,17 @@ function hslToRgb(h: number, s: number, l: number) {
 }
 
 export class Color {
-	#rgba: Array<number> = [];
+	#rgba: [number, number, number, number];
+
 	constructor({ red = 0, green = 0, blue = 0, alpha = 1, hex = '' } = {}) {
-		this.#rgba[0] = red;
-		this.#rgba[1] = green;
-		this.#rgba[2] = blue;
-		this.#rgba[3] = alpha;
+		this.#rgba = [red, green, blue, alpha];
 
 		if (hex) {
 			this.setHex(hex);
 		}
 	}
 
-	setHue(hue: number) {
+	setHue(hue: number): void {
 		const hsl = rgbToHsl(this.#rgba[0], this.#rgba[1], this.#rgba[2]);
 
 
@@ -70,7 +69,7 @@ export class Color {
 		this.#rgba[2] = rgb[2];
 	}
 
-	setSatLum(sat: number, lum: number) {
+	setSatLum(sat: number, lum: number): void {
 		const hsl = rgbToHsl(this.#rgba[0], this.#rgba[1], this.#rgba[2]);
 
 
@@ -82,7 +81,7 @@ export class Color {
 
 	}
 
-	setHex(hex: string) {
+	setHex(hex: string): void {
 		hex = (hex.startsWith('#') ? hex.slice(1) : hex)
 			.replace(/^(\w{3})$/, '$1F')                   //987      -> 987F
 			.replace(/^(\w)(\w)(\w)(\w)$/, '$1$1$2$2$3$3$4$4')      //9876     -> 99887766
@@ -104,12 +103,12 @@ export class Color {
 		}
 	}
 
-	getHex() {
+	getHex(): string {
 		const hex = this.#rgba.map(x => Math.round(x * 255).toString(16));
 		return '#' + hex.map(x => x.padStart(2, '0')).join('');
 	}
 
-	getHue() {
+	getHue(): number {
 		return rgbToHsl(this.#rgba[0], this.#rgba[1], this.#rgba[2])[0];
 	}
 
@@ -117,7 +116,7 @@ export class Color {
 		return rgbToHsl(this.#rgba[0], this.#rgba[1], this.#rgba[2]);
 	}
 
-	getRgba() {
+	getRgba(): [number, number, number, number] {
 		return this.#rgba;
 	}
 
@@ -125,7 +124,7 @@ export class Color {
 		this.#rgba[0] = red;
 	}
 
-	get red() {
+	get red(): number {
 		return this.#rgba[0];
 	}
 
@@ -133,7 +132,7 @@ export class Color {
 		this.#rgba[1] = green;
 	}
 
-	get green() {
+	get green(): number {
 		return this.#rgba[1];
 	}
 
@@ -141,7 +140,7 @@ export class Color {
 		this.#rgba[2] = blue;
 	}
 
-	get blue() {
+	get blue(): number {
 		return this.#rgba[2];
 	}
 
@@ -149,7 +148,7 @@ export class Color {
 		this.#rgba[3] = alpha;
 	}
 
-	get alpha() {
+	get alpha(): number {
 		return this.#rgba[3];
 	}
 

@@ -25,9 +25,7 @@ export class MyEventTarget<T extends string = string, E extends Event = Event> {
 
 type MyEventListenerOrEventListenerObject<E extends Event = Event> = MyEventListener<E> | MyEventListenerObject<E>;
 
-interface MyEventListener<E extends Event = Event> {
-	(evt: E): void;
-}
+type MyEventListener<E extends Event = Event> = (evt: E) => void;
 
 interface MyEventListenerObject<E extends Event = Event> {
 	handleEvent(object: E): void;

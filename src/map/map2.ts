@@ -13,7 +13,7 @@ export class Map2<K1, K2, V> {
 		return this.#map.get(key1)?.delete(key2) ?? false;
 	}
 
-	forEach(callbackfn: (value: V, key1: K1, key2: K2, map: Map2<K1, K2, V>) => void, thisArg?: any): void {
+	forEach(callbackfn: (value: V, key1: K1, key2: K2, map: Map2<K1, K2, V>) => void, thisArg?: unknown): void {
 		this.#map.forEach(
 			(value: Map<K2, V>, key1: K1) => {
 				value.forEach(
@@ -47,7 +47,7 @@ export class Map2<K1, K2, V> {
 	get size(): number {
 		let size = 0
 
-		for (const [_, m] of this.#map) {
+		for (const [, m] of this.#map) {
 			size += m.size;
 		}
 
@@ -70,18 +70,18 @@ export class Map2<K1, K2, V> {
 				iterator2 = current1.value[1].entries();
 			}
 
-			let current2 = iterator2.next();
+			const current2 = iterator2.next();
 			if (current2.done) {
 				iterator2 = null;
 				return next();
 			}
 
-			return { value: [current1.value![0], current2.value![0], current2.value![1]], done: false };
+			return { value: [current1.value![0], current2.value[0], current2.value[1]], done: false };
 		}
 
 		return {
 			next: next,
-			[Symbol.iterator]() {
+			[Symbol.iterator](): Map2Iterator<[K1, K2, V]> {
 				return this;
 			},
 		};

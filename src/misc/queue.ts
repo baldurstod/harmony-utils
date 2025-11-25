@@ -17,7 +17,7 @@ export class Queue<T> {
 		}
 	}
 
-	enqueue(value: T) {
+	enqueue(value: T): void {
 		const item = new Item<T>(value);
 		if (!this.#first) {
 			this.#first = item;
@@ -30,7 +30,7 @@ export class Queue<T> {
 	}
 
 	dequeue(): T | null {
-		let item = this.#first;
+		const item = this.#first;
 		if (item) {
 			this.#first = item.next;
 			if (item == this.#last) {
