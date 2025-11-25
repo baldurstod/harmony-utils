@@ -1,11 +1,12 @@
 function rgbToHsl(r, g, b) {
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h = 0, s, l = (max + min) / 2;
+    let h = 0, s;
+    const l = (max + min) / 2;
     if (max == min) {
         h = s = 0; // achromatic
     }
     else {
-        var d = max - min;
+        const d = max - min;
         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
         switch (max) {
             case r:
@@ -23,7 +24,7 @@ function rgbToHsl(r, g, b) {
     return [h, s, l];
 }
 function hslToRgb(h, s, l) {
-    var r, g, b;
+    let r, g, b;
     if (s == 0) {
         r = g = b = l; // achromatic
     }
@@ -41,8 +42,8 @@ function hslToRgb(h, s, l) {
                 return p + (q - p) * (2 / 3 - t) * 6;
             return p;
         }
-        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        var p = 2 * l - q;
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
         r = hue2rgb(p, q, h + 1 / 3);
         g = hue2rgb(p, q, h);
         b = hue2rgb(p, q, h - 1 / 3);
@@ -50,12 +51,9 @@ function hslToRgb(h, s, l) {
     return [r, g, b];
 }
 class Color {
-    #rgba = [];
+    #rgba;
     constructor({ red = 0, green = 0, blue = 0, alpha = 1, hex = '' } = {}) {
-        this.#rgba[0] = red;
-        this.#rgba[1] = green;
-        this.#rgba[2] = blue;
-        this.#rgba[3] = alpha;
+        this.#rgba = [red, green, blue, alpha];
         if (hex) {
             this.setHex(hex);
         }
@@ -169,7 +167,7 @@ class Map2 {
     }
     get size() {
         let size = 0;
-        for (const [_, m] of this.#map) {
+        for (const [, m] of this.#map) {
             size += m.size;
         }
         return size;
@@ -186,7 +184,7 @@ class Map2 {
                 }
                 iterator2 = current1.value[1].entries();
             }
-            let current2 = iterator2.next();
+            const current2 = iterator2.next();
             if (current2.done) {
                 iterator2 = null;
                 return next();
@@ -200,6 +198,28 @@ class Map2 {
             },
         };
     };
+}
+
+/**
+ * Create an image from a file.
+ * @param file The file containing an image.
+ * @returns A promise that fulfills to a decoded image or null
+ */
+function fileToImage(file) {
+    const reader = new FileReader();
+    let promiseResolve;
+    const promise = new Promise((resolve) => {
+        promiseResolve = resolve;
+    });
+    reader.onload = () => {
+        const image = new Image();
+        image.src = reader.result;
+        image.decode()
+            .then(() => promiseResolve(image))
+            .catch(() => promiseResolve(null));
+    };
+    reader.readAsDataURL(file);
+    return promise;
 }
 
 /**
@@ -249,7 +269,7 @@ class Queue {
         this.#last = item;
     }
     dequeue() {
-        let item = this.#first;
+        const item = this.#first;
         if (item) {
             this.#first = item.next;
             if (item == this.#last) {
@@ -277,12 +297,13 @@ class StaticEventTarget {
     }
 }
 
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 function once(fn, context) {
     let result;
     let fn2 = fn;
-    return () => {
+    return (...args) => {
         if (fn2) {
-            result = fn2.apply(context ?? this, arguments);
+            result = fn2.apply(context ?? this, args);
             fn2 = null;
         }
         return result;
@@ -295,16 +316,16 @@ function setTimeoutPromise(timeout, signal) {
         if (signal) {
             if (signal.aborted) {
                 clearTimeout(timeoutID);
-                reject('aborted');
+                reject(new Error('timeout aborted'));
             }
             else {
                 signal.addEventListener('abort', () => {
                     clearTimeout(timeoutID);
-                    reject('aborted');
+                    reject(new Error('timeout aborted'));
                 });
             }
         }
     });
 }
 
-export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, once, setTimeoutPromise };
+export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, fileToImage, once, setTimeoutPromise };

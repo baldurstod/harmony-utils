@@ -13,7 +13,7 @@ export declare class Color {
     getHex(): string;
     getHue(): number;
     getHsl(): [number, number, number];
-    getRgba(): number[];
+    getRgba(): [number, number, number, number];
     set red(red: number);
     get red(): number;
     set green(green: number);
@@ -26,6 +26,13 @@ export declare class Color {
 }
 
 /**
+ * Create an image from a file.
+ * @param file The file containing an image.
+ * @returns A promise that fulfills to a decoded image or null
+ */
+export declare function fileToImage(file: File): Promise<HTMLImageElement | null>;
+
+/**
  * Map2 holds a key-key-value triplet using an underlying Map
  * Any value can be used as either keys or value
  */
@@ -33,7 +40,7 @@ export declare class Map2<K1, K2, V> {
     #private;
     clear(): void;
     delete(key1: K1, key2: K2): boolean;
-    forEach(callbackfn: (value: V, key1: K1, key2: K2, map: Map2<K1, K2, V>) => void, thisArg?: any): void;
+    forEach(callbackfn: (value: V, key1: K1, key2: K2, map: Map2<K1, K2, V>) => void, thisArg?: unknown): void;
     get(key1: K1, key2: K2): V | undefined;
     getSubMap(key1: K1): Map<K2, V> | undefined;
     has(key1: K1, key2: K2): boolean;
@@ -46,9 +53,7 @@ declare interface Map2Iterator<T> extends IteratorObject<T, BuiltinIteratorRetur
     [Symbol.iterator](): Map2Iterator<T>;
 }
 
-declare interface MyEventListener<E extends Event = Event> {
-    (evt: E): void;
-}
+declare type MyEventListener<E extends Event = Event> = (evt: E) => void;
 
 declare interface MyEventListenerObject<E extends Event = Event> {
     handleEvent(object: E): void;
@@ -69,7 +74,7 @@ export declare class MyEventTarget<T extends string = string, E extends Event = 
     getEventTarget(): EventTarget;
 }
 
-export declare function once(this: any, fn: Function, context?: Function): () => any;
+export declare function once(this: unknown, fn: Function, context?: Function): () => unknown;
 
 export declare class Queue<T> {
     #private;
@@ -78,7 +83,7 @@ export declare class Queue<T> {
     dequeue(): T | null;
 }
 
-export declare function setTimeoutPromise(timeout: number, signal?: AbortSignal): Promise<unknown>;
+export declare function setTimeoutPromise(timeout: number, signal?: AbortSignal): Promise<void>;
 
 /**
  * Static version of MyEventTarget
