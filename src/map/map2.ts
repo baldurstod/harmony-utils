@@ -27,7 +27,7 @@ export class Map2<K1, K2, V> {
 		return this.#map.get(key1)?.get(key2);
 	}
 
-	getMap(key1: K1): Map<K1, Map<K2, V>> {
+	getMap(): Map<K1, Map<K2, V>> {
 		return this.#map;
 	}
 

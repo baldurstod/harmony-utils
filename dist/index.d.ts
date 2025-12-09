@@ -42,7 +42,7 @@ export declare class Map2<K1, K2, V> {
     delete(key1: K1, key2: K2): boolean;
     forEach(callbackfn: (value: V, key1: K1, key2: K2, map: Map2<K1, K2, V>) => void, thisArg?: unknown): void;
     get(key1: K1, key2: K2): V | undefined;
-    getMap(key1: K1): Map<K1, Map<K2, V>>;
+    getMap(): Map<K1, Map<K2, V>>;
     getSubMap(key1: K1): Map<K2, V> | undefined;
     has(key1: K1, key2: K2): boolean;
     set(key1: K1, key2: K2, value: V): this;
