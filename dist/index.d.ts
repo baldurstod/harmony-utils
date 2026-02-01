@@ -33,6 +33,18 @@ export declare class Color {
 export declare function fileToImage(file: File): Promise<HTMLImageElement | null>;
 
 /**
+ * Joins path segments.  Preserves initial "/" and resolves ".." and "."
+ * Does not support using ".." to go above/outside the root.
+ * This means that join("foo", "../../bar") will not resolve to "../bar"
+ *
+ * @see https://gist.github.com/creationix/7435851
+ *
+ * @param segments The path segments to join
+ * @returns The joined path
+ */
+export declare function joinPath(...segments: string[]): string;
+
+/**
  * Map2 holds a key-key-value triplet using an underlying Map
  * Any value can be used as either keys or value
  */
