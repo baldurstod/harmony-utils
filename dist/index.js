@@ -233,35 +233,35 @@ function logOnce(message, max = 1) {
 function infoOnce(message, max = 1) {
     messageOnce('info', message, max);
 }
-function messageStack(level, message, value) {
+function messageStack(level, message, key, value) {
     if (!messages2) {
         messages2 = new Map2();
     }
     let s = messages2.get(level, message);
     if (!s) {
-        s = new Set();
+        s = new Map();
         messages2.set(level, message, s);
-        s.add(value);
+        s.set(key, value);
         console[level](message, s);
     }
     else {
-        s.add(value);
+        s.set(key, value);
     }
 }
-function errorStack(message, value) {
-    messageStack('error', message, value);
+function errorStack(message, key, value) {
+    messageStack('error', message, key, value);
 }
-function warnStack(message, value) {
-    messageStack('warn', message, value);
+function warnStack(message, key, value) {
+    messageStack('warn', message, key, value);
 }
-function debugStack(message, value) {
-    messageStack('debug', message, value);
+function debugStack(message, key, value) {
+    messageStack('debug', message, key, value);
 }
-function logStack(message, value) {
-    messageStack('log', message, value);
+function logStack(message, key, value) {
+    messageStack('log', message, key, value);
 }
-function infoStack(message, value) {
-    messageStack('info', message, value);
+function infoStack(message, key, value) {
+    messageStack('info', message, key, value);
 }
 
 /**
@@ -433,4 +433,4 @@ function setTimeoutPromise(timeout, signal) {
     });
 }
 
-export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, debugOnce, debugStack, errorOnce, errorStack, fileToImage, infoOnce, infoStack, joinPath, logOnce, logStack, messageStack, once, setTimeoutPromise, warnOnce, warnStack };
+export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, debugOnce, debugStack, errorOnce, errorStack, fileToImage, infoOnce, infoStack, joinPath, logOnce, logStack, once, setTimeoutPromise, warnOnce, warnStack };
