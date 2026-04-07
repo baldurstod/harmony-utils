@@ -25,12 +25,29 @@ export declare class Color {
     getLuminance(): number;
 }
 
+export declare function debugOnce(message: string, max?: number): void;
+
+export declare function debugStack(message: string, value: ErrorValue): void;
+
+declare type ErrorLevel = 'error' | 'log' | 'debug' | 'info' | 'warn';
+
+export declare function errorOnce(message: string, max?: number): void;
+
+export declare function errorStack(message: string, value: ErrorValue): void;
+
+declare interface ErrorValue {
+}
+
 /**
  * Create an image from a file.
  * @param file The file containing an image.
  * @returns A promise that fulfills to a decoded image or null
  */
 export declare function fileToImage(file: File): Promise<HTMLImageElement | null>;
+
+export declare function infoOnce(message: string, max?: number): void;
+
+export declare function infoStack(message: string, value: ErrorValue): void;
 
 /**
  * Joins path segments.  Preserves initial "/" and resolves ".." and "."
@@ -43,6 +60,10 @@ export declare function fileToImage(file: File): Promise<HTMLImageElement | null
  * @returns The joined path
  */
 export declare function joinPath(...segments: string[]): string;
+
+export declare function logOnce(message: string, max?: number): void;
+
+export declare function logStack(message: string, value: ErrorValue): void;
 
 /**
  * Map2 holds a key-key-value triplet using an underlying Map
@@ -65,6 +86,8 @@ export declare class Map2<K1, K2, V> {
 declare interface Map2Iterator<T> extends IteratorObject<T, BuiltinIteratorReturn, unknown> {
     [Symbol.iterator](): Map2Iterator<T>;
 }
+
+export declare function messageStack(level: ErrorLevel, message: string, value: ErrorValue): void;
 
 declare type MyEventListener<E extends Event = Event> = (evt: E) => void;
 
@@ -107,5 +130,9 @@ export declare class StaticEventTarget {
     static dispatchEvent(event: Event): boolean;
     static removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: EventListenerOptions | boolean): void;
 }
+
+export declare function warnOnce(message: string, max?: number): void;
+
+export declare function warnStack(message: string, value: ErrorValue): void;
 
 export { }

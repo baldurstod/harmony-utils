@@ -203,6 +203,63 @@ class Map2 {
     };
 }
 
+let messages;
+let messages2;
+function messageOnce(level, message, max) {
+    if (!messages) {
+        messages = new Map2();
+    }
+    if (!messages.has(level, message)) {
+        messages.set(level, message, 0);
+    }
+    const newCount = messages.get(level, message) + 1;
+    messages.set(level, message, newCount);
+    if (newCount <= max) {
+        console[level](message);
+    }
+}
+function errorOnce(message, max = 1) {
+    messageOnce('error', message, max);
+}
+function warnOnce(message, max = 1) {
+    messageOnce('warn', message, max);
+}
+function debugOnce(message, max = 1) {
+    messageOnce('debug', message, max);
+}
+function logOnce(message, max = 1) {
+    messageOnce('log', message, max);
+}
+function infoOnce(message, max = 1) {
+    messageOnce('info', message, max);
+}
+function messageStack(level, message, value) {
+    if (!messages2) {
+        messages2 = new Map2();
+    }
+    if (!messages2.has(level, message)) {
+        const s = new Set();
+        messages2.set(level, message, s);
+        console[level](message, s);
+    }
+    messages2.get(level, message).add(value);
+}
+function errorStack(message, value) {
+    messageStack('error', message, value);
+}
+function warnStack(message, value) {
+    messageStack('warn', message, value);
+}
+function debugStack(message, value) {
+    messageStack('debug', message, value);
+}
+function logStack(message, value) {
+    messageStack('log', message, value);
+}
+function infoStack(message, value) {
+    messageStack('info', message, value);
+}
+
 /**
  * Create an image from a file.
  * @param file The file containing an image.
@@ -372,4 +429,4 @@ function setTimeoutPromise(timeout, signal) {
     });
 }
 
-export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, fileToImage, joinPath, once, setTimeoutPromise };
+export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, debugOnce, debugStack, errorOnce, errorStack, fileToImage, infoOnce, infoStack, joinPath, logOnce, logStack, messageStack, once, setTimeoutPromise, warnOnce, warnStack };

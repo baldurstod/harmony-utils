@@ -1,4 +1,5 @@
 export * from './color';
+export * from './console/console';
 export * from './map/map2';
 export * from './misc/image';
 export * from './misc/myeventtarget';
