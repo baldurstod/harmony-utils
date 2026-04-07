@@ -25,13 +25,17 @@ export declare class Color {
     getLuminance(): number;
 }
 
+export declare function debugMap(message: string, key: ErrorValue, value?: ErrorValue): void;
+
 export declare function debugOnce(message: string, max?: number): void;
 
-export declare function debugStack(message: string, key: ErrorValue, value?: ErrorValue): void;
+export declare function debugSet(message: string, value: ErrorValue): void;
+
+export declare function errorMap(message: string, key: ErrorValue, value?: ErrorValue): void;
 
 export declare function errorOnce(message: string, max?: number): void;
 
-export declare function errorStack(message: string, key: ErrorValue, value?: ErrorValue): void;
+export declare function errorSet(message: string, value: ErrorValue): void;
 
 declare interface ErrorValue {
 }
@@ -43,9 +47,11 @@ declare interface ErrorValue {
  */
 export declare function fileToImage(file: File): Promise<HTMLImageElement | null>;
 
+export declare function infoMap(message: string, key: ErrorValue, value?: ErrorValue): void;
+
 export declare function infoOnce(message: string, max?: number): void;
 
-export declare function infoStack(message: string, key: ErrorValue, value?: ErrorValue): void;
+export declare function infoSet(message: string, value: ErrorValue): void;
 
 /**
  * Joins path segments.  Preserves initial "/" and resolves ".." and "."
@@ -59,9 +65,11 @@ export declare function infoStack(message: string, key: ErrorValue, value?: Erro
  */
 export declare function joinPath(...segments: string[]): string;
 
+export declare function logMap(message: string, key: ErrorValue, value?: ErrorValue): void;
+
 export declare function logOnce(message: string, max?: number): void;
 
-export declare function logStack(message: string, key: ErrorValue, value?: ErrorValue): void;
+export declare function logSet(message: string, value: ErrorValue): void;
 
 /**
  * Map2 holds a key-key-value triplet using an underlying Map
@@ -127,8 +135,10 @@ export declare class StaticEventTarget {
     static removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: EventListenerOptions | boolean): void;
 }
 
+export declare function warnMap(message: string, key: ErrorValue, value?: ErrorValue): void;
+
 export declare function warnOnce(message: string, max?: number): void;
 
-export declare function warnStack(message: string, key: ErrorValue, value?: ErrorValue): void;
+export declare function warnSet(message: string, value: ErrorValue): void;
 
 export { }

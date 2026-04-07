@@ -204,7 +204,8 @@ class Map2 {
 }
 
 let messages;
-let messages2;
+let messagesSet;
+let messagesMap;
 function messageOnce(level, message, max) {
     if (!messages) {
         messages = new Map2();
@@ -233,14 +234,44 @@ function logOnce(message, max = 1) {
 function infoOnce(message, max = 1) {
     messageOnce('info', message, max);
 }
-function messageStack(level, message, key, value) {
-    if (!messages2) {
-        messages2 = new Map2();
+function messageSet(level, message, value) {
+    if (!messagesSet) {
+        messagesSet = new Map2();
     }
-    let s = messages2.get(level, message);
+    let s = messagesSet.get(level, message);
+    if (!s) {
+        s = new Set();
+        messagesSet.set(level, message, s);
+        s.add(value);
+        console[level](message, s);
+    }
+    else {
+        s.add(value);
+    }
+}
+function errorSet(message, value) {
+    messageSet('error', message, value);
+}
+function warnSet(message, value) {
+    messageSet('warn', message, value);
+}
+function debugSet(message, value) {
+    messageSet('debug', message, value);
+}
+function logSet(message, value) {
+    messageSet('log', message, value);
+}
+function infoSet(message, value) {
+    messageSet('info', message, value);
+}
+function messageMap(level, message, key, value) {
+    if (!messagesMap) {
+        messagesMap = new Map2();
+    }
+    let s = messagesMap.get(level, message);
     if (!s) {
         s = new Map();
-        messages2.set(level, message, s);
+        messagesMap.set(level, message, s);
         s.set(key, value);
         console[level](message, s);
     }
@@ -248,20 +279,20 @@ function messageStack(level, message, key, value) {
         s.set(key, value);
     }
 }
-function errorStack(message, key, value) {
-    messageStack('error', message, key, value);
+function errorMap(message, key, value) {
+    messageMap('error', message, key, value);
 }
-function warnStack(message, key, value) {
-    messageStack('warn', message, key, value);
+function warnMap(message, key, value) {
+    messageMap('warn', message, key, value);
 }
-function debugStack(message, key, value) {
-    messageStack('debug', message, key, value);
+function debugMap(message, key, value) {
+    messageMap('debug', message, key, value);
 }
-function logStack(message, key, value) {
-    messageStack('log', message, key, value);
+function logMap(message, key, value) {
+    messageMap('log', message, key, value);
 }
-function infoStack(message, key, value) {
-    messageStack('info', message, key, value);
+function infoMap(message, key, value) {
+    messageMap('info', message, key, value);
 }
 
 /**
@@ -433,4 +464,4 @@ function setTimeoutPromise(timeout, signal) {
     });
 }
 
-export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, debugOnce, debugStack, errorOnce, errorStack, fileToImage, infoOnce, infoStack, joinPath, logOnce, logStack, once, setTimeoutPromise, warnOnce, warnStack };
+export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, debugMap, debugOnce, debugSet, errorMap, errorOnce, errorSet, fileToImage, infoMap, infoOnce, infoSet, joinPath, logMap, logOnce, logSet, once, setTimeoutPromise, warnMap, warnOnce, warnSet };
