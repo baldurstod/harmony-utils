@@ -47,13 +47,15 @@ export function messageStack(level: ErrorLevel, message: string, value: ErrorVal
 		messages2 = new Map2<ErrorLevel, string, Set<ErrorValue>>();
 	}
 
-	if (!messages2.has(level, message)) {
-		const s = new Set<ErrorValue>();
+	let s = messages2.get(level, message);
+	if (!s) {
+		s = new Set<ErrorValue>();
 		messages2.set(level, message, s);
+		s.add(value);
 		console[level](message, s);
+	} else {
+		s.add(value);
 	}
-
-	messages2.get(level, message)!.add(value);
 }
 
 export function errorStack(message: string, value: ErrorValue): void {

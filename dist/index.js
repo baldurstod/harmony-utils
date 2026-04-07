@@ -237,12 +237,16 @@ function messageStack(level, message, value) {
     if (!messages2) {
         messages2 = new Map2();
     }
-    if (!messages2.has(level, message)) {
-        const s = new Set();
+    let s = messages2.get(level, message);
+    if (!s) {
+        s = new Set();
         messages2.set(level, message, s);
+        s.add(value);
         console[level](message, s);
     }
-    messages2.get(level, message).add(value);
+    else {
+        s.add(value);
+    }
 }
 function errorStack(message, value) {
     messageStack('error', message, value);
