@@ -328,7 +328,7 @@ class FpsCounter {
      */
     getFps() {
         const avgDeltaTime = this.#samples.reduce((sum, dt) => sum + dt, 0) / this.#samples.length;
-        if (avgDeltaTime === 0) {
+        if (avgDeltaTime === 0 || Number.isNaN(avgDeltaTime)) {
             return 0;
         }
         return Math.round(1 / avgDeltaTime);
@@ -356,7 +356,7 @@ class FpsCounter {
         const len = this.#samples.length;
         const avgDeltaTime = this.#samples.reduce((sum, dt) => sum + dt, 0) / len;
         const sum = this.#samples2.reduce((sum, qty) => sum + qty, 0) / len;
-        if (avgDeltaTime === 0) {
+        if (avgDeltaTime === 0 || Number.isNaN(avgDeltaTime)) {
             return 0;
         }
         return Math.round(sum / avgDeltaTime);
