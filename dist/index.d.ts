@@ -47,6 +47,39 @@ declare interface ErrorValue {
  */
 export declare function fileToImage(file: File): Promise<HTMLImageElement | null>;
 
+/**
+ * An utility class that either count frames per second or quantity per second, averaging the last N samples
+ */
+export declare class FpsCounter {
+    #private;
+    /**
+     * Constructor
+     * @param sampleSize The max number of samples to consider. Default to 10.
+     */
+    constructor(sampleSize?: number);
+    /**
+     * Add a new frame.
+     * @param currentTime An optional time, in milliseconds. Default to performance.now().
+     */
+    addFrame(currentTime?: number): void;
+    /**
+     * Get the average fps over the last N samples.
+     * @returns The averaged fps
+     */
+    getFps(): number;
+    /**
+     * Add quantity. Do not mix up addFrame and addQuantity, use a different counter.
+     * @param quantity The quantity to add, for instance an amount of rays.
+     * @param currentTime An optional time, in milliseconds. Default to performance.now().
+     */
+    addQuantity(quantity: number, currentTime?: number): void;
+    /**
+     * Get the average quantity per second over the last N samples.
+     * @returns The averaged quantity per second.
+     */
+    getSpeed(): number;
+}
+
 export declare function infoMap(message: string, key: ErrorValue, value?: ErrorValue): void;
 
 export declare function infoOnce(message: string, max?: number): void;

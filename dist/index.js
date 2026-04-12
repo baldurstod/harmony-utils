@@ -296,6 +296,68 @@ function infoMap(message, key, value) {
 }
 
 /**
+ * An utility class that either count frames per second or quantity per second, averaging the last N samples
+ */
+class FpsCounter {
+    #sampleSize;
+    #samples = [];
+    #samples2 = [];
+    #lastFrameTime = 0;
+    /**
+     * Constructor
+     * @param sampleSize The max number of samples to consider. Default to 10.
+     */
+    constructor(sampleSize = 10) {
+        this.#sampleSize = sampleSize;
+    }
+    /**
+     * Add a new frame.
+     * @param currentTime An optional time, in milliseconds. Default to performance.now().
+     */
+    addFrame(currentTime = performance.now()) {
+        const deltaTime = (currentTime - this.#lastFrameTime) / 1000;
+        this.#lastFrameTime = currentTime;
+        this.#samples.push(deltaTime);
+        if (this.#samples.length > this.#sampleSize) {
+            this.#samples.shift();
+        }
+    }
+    /**
+     * Get the average fps over the last N samples.
+     * @returns The averaged fps
+     */
+    getFps() {
+        const avgDeltaTime = this.#samples.reduce((sum, dt) => sum + dt, 0) / this.#samples.length;
+        return Math.round(1 / avgDeltaTime);
+    }
+    /**
+     * Add quantity. Do not mix up addFrame and addQuantity, use a different counter.
+     * @param quantity The quantity to add, for instance an amount of rays.
+     * @param currentTime An optional time, in milliseconds. Default to performance.now().
+     */
+    addQuantity(quantity, currentTime = performance.now()) {
+        const deltaTime = (currentTime - this.#lastFrameTime) / 1000;
+        this.#lastFrameTime = currentTime;
+        this.#samples.push(deltaTime);
+        this.#samples2.push(quantity);
+        if (this.#samples.length > this.#sampleSize) {
+            this.#samples.shift();
+            this.#samples2.shift();
+        }
+    }
+    /**
+     * Get the average quantity per second over the last N samples.
+     * @returns The averaged quantity per second.
+     */
+    getSpeed() {
+        const len = this.#samples.length;
+        const avgDeltaTime = this.#samples.reduce((sum, dt) => sum + dt, 0) / len;
+        const sum = this.#samples2.reduce((sum, qty) => sum + qty, 0) / len;
+        return Math.round(sum / avgDeltaTime);
+    }
+}
+
+/**
  * Create an image from a file.
  * @param file The file containing an image.
  * @returns A promise that fulfills to a decoded image or null
@@ -500,4 +562,4 @@ function setTimeoutPromise(timeout, signal) {
     });
 }
 
-export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, debugMap, debugOnce, debugSet, errorMap, errorOnce, errorSet, fileToImage, infoMap, infoOnce, infoSet, joinPath, logMap, logOnce, logSet, once, setTimeoutPromise, toHumanReadable, warnMap, warnOnce, warnSet };
+export { Color, FpsCounter, Map2, MyEventTarget, Queue, StaticEventTarget, debugMap, debugOnce, debugSet, errorMap, errorOnce, errorSet, fileToImage, infoMap, infoOnce, infoSet, joinPath, logMap, logOnce, logSet, once, setTimeoutPromise, toHumanReadable, warnMap, warnOnce, warnSet };
