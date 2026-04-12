@@ -135,7 +135,7 @@ export declare class StaticEventTarget {
     static removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: EventListenerOptions | boolean): void;
 }
 
-export declare function toHumanReadable(input: number): string;
+export declare function toHumanReadable(input: number, precision?: number): string;
 
 export declare function warnMap(message: string, key: ErrorValue, value?: ErrorValue): void;
 

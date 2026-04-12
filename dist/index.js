@@ -352,13 +352,19 @@ const prefixes = [
     [0.000000001, 'n'],
     */
 ];
-function toHumanReadable(input) {
+function toHumanReadable(input, precision = 0) {
     let symbol = '';
     let value = input;
+    const dec = Math.pow(10, Math.round(Math.max(precision, 0)));
     for (const [prefix, s] of prefixes) {
         if (input > prefix) {
             symbol = s;
-            value = Math.round(value / prefix);
+            if (dec === 1) {
+                value = Math.round(value / prefix);
+            }
+            else {
+                value = Math.round(value / (prefix / dec)) / dec;
+            }
             break;
         }
     }

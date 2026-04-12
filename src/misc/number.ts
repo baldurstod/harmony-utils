@@ -13,15 +13,21 @@ const prefixes: [number, string][] = [
 	*/
 ]
 
-export function toHumanReadable(input: number): string {
+export function toHumanReadable(input: number, precision = 0): string {
 
 	let symbol = '';
 	let value = input;
 
+	const dec = Math.pow(10, Math.round(Math.max(precision, 0)));
+
 	for (const [prefix, s] of prefixes) {
 		if (input > prefix) {
 			symbol = s;
-			value = Math.round(value / prefix);
+			if (dec === 1) {
+				value = Math.round(value / prefix);
+			} else {
+				value = Math.round(value / (prefix / dec)) / dec;
+			}
 			break;
 		}
 	}
