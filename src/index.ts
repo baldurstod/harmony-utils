@@ -3,6 +3,7 @@ export * from './console/console';
 export * from './map/map2';
 export * from './misc/image';
 export * from './misc/myeventtarget';
+export * from './misc/number';
 export * from './misc/path';
 export * from './misc/queue';
 export * from './misc/staticeventtarget';

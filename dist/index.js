@@ -338,6 +338,36 @@ class MyEventTarget {
     }
 }
 
+const prefixes = [
+    [1000000000000000000, 'E'],
+    [1000000000000000, 'P'],
+    [1000000000000, 'T'],
+    [1000000000, 'G'],
+    [1000000, 'M'],
+    [1000, 'k'],
+    /*
+    [1, ''],
+    [0.001, 'm'],
+    [0.000001, 'µ'],
+    [0.000000001, 'n'],
+    */
+];
+function toHumanReadable(input) {
+    let symbol = '';
+    let value = input;
+    for (const [prefix, s] of prefixes) {
+        if (input > prefix) {
+            symbol = s;
+            value = Math.round(value / prefix);
+            break;
+        }
+    }
+    if (symbol) {
+        return `${value} ${symbol}`;
+    }
+    return String(input);
+}
+
 /**
  * Joins path segments.  Preserves initial "/" and resolves ".." and "."
  * Does not support using ".." to go above/outside the root.
@@ -464,4 +494,4 @@ function setTimeoutPromise(timeout, signal) {
     });
 }
 
-export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, debugMap, debugOnce, debugSet, errorMap, errorOnce, errorSet, fileToImage, infoMap, infoOnce, infoSet, joinPath, logMap, logOnce, logSet, once, setTimeoutPromise, warnMap, warnOnce, warnSet };
+export { Color, Map2, MyEventTarget, Queue, StaticEventTarget, debugMap, debugOnce, debugSet, errorMap, errorOnce, errorSet, fileToImage, infoMap, infoOnce, infoSet, joinPath, logMap, logOnce, logSet, once, setTimeoutPromise, toHumanReadable, warnMap, warnOnce, warnSet };
