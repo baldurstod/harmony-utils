@@ -364,6 +364,15 @@ class FpsCounter {
 }
 
 /**
+ * Check is an http status code is a successful response
+ * @param status Http status code
+ * @returns True if the code in the {200..299} range, false otherwise
+ */
+function isHTTPSuccess(status) {
+    return status >= 200 && status < 300;
+}
+
+/**
  * Create an image from a file.
  * @param file The file containing an image.
  * @returns A promise that fulfills to a decoded image or null
@@ -568,4 +577,4 @@ function setTimeoutPromise(timeout, signal) {
     });
 }
 
-export { Color, FpsCounter, Map2, MyEventTarget, Queue, StaticEventTarget, debugMap, debugOnce, debugSet, errorMap, errorOnce, errorSet, fileToImage, infoMap, infoOnce, infoSet, joinPath, logMap, logOnce, logSet, once, setTimeoutPromise, toHumanReadable, warnMap, warnOnce, warnSet };
+export { Color, FpsCounter, Map2, MyEventTarget, Queue, StaticEventTarget, debugMap, debugOnce, debugSet, errorMap, errorOnce, errorSet, fileToImage, infoMap, infoOnce, infoSet, isHTTPSuccess, joinPath, logMap, logOnce, logSet, once, setTimeoutPromise, toHumanReadable, warnMap, warnOnce, warnSet };

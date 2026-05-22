@@ -87,6 +87,13 @@ export declare function infoOnce(message: string, max?: number): void;
 export declare function infoSet(message: string, value: ErrorValue): void;
 
 /**
+ * Check is an http status code is a successful response
+ * @param status Http status code
+ * @returns True if the code in the {200..299} range, false otherwise
+ */
+export declare function isHTTPSuccess(status: number): boolean;
+
+/**
  * Joins path segments.  Preserves initial "/" and resolves ".." and "."
  * Does not support using ".." to go above/outside the root.
  * This means that join("foo", "../../bar") will not resolve to "../bar"

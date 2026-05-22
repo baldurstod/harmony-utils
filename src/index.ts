@@ -2,6 +2,7 @@ export * from './color';
 export * from './console/console';
 export * from './map/map2';
 export * from './misc/fpscounter';
+export * from './misc/httpstatus';
 export * from './misc/image';
 export * from './misc/myeventtarget';
 export * from './misc/number';
